@@ -5,7 +5,3 @@
 describe directory('/home/vagrant/code') do
   it { should exist }
 end
-
-describe directory('/home/vagrant/code/test_app') do
-  it { should exist }
-end

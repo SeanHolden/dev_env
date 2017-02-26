@@ -15,6 +15,10 @@ describe 'dev_env::default' do
         converge(described_recipe)
     }
 
+    before do
+      stub_command("echo $SHELL | grep -c zsh").and_return(false)
+    end
+
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
@@ -28,14 +32,28 @@ describe 'dev_env::default' do
             mode: '755'
           )
       end
+    end
 
-      it 'creates ~/code/test_app' do
-        expect(chef_run).to create_directory('/home/vagrant/code/test_app').
+    describe '#git' do
+      it 'checkout/sync repo' do
+        expect(chef_run).to sync_git('/home/vagrant/code/ReactReduxStarter').
           with(
-            owner: 'vagrant',
+            repository: 'git@github.com:SeanHolden/ReactReduxStarter.git',
+            user: 'vagrant',
             group: 'vagrant',
-            mode: '755'
+            environment: { 'HOME' => '/home/vagrant', 'USER' => 'vagrant' },
+            timeout: 10
           )
+      end
+    end
+
+    describe 'templates' do
+      it 'creates ~/.zshrc' do
+        expect(chef_run).to create_template('/home/vagrant/.zshrc').with(
+          owner: 'vagrant',
+          group: 'vagrant',
+          mode: '644'
+        )
       end
     end
   end

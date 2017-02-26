@@ -1,0 +1,23 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+ZSH_THEME="robbyrussell"
+
+<%= "plugins=(#{node['dev_env']['ohmyzsh_plugins'].join(' ')})" %>
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# aliases
+<% node['dev_env']['aliases'].each do |_alias| %>
+  <%= "alias #{_alias}" %>
+<% end %>
+
+# environment variables
+<% node['dev_env']['environment_variables'].each do |env_var| %>
+  <%= "export #{env_var}" %>
+<% end %>
