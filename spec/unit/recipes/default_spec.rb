@@ -39,6 +39,8 @@ describe 'dev_env::default' do
         expect(chef_run).to sync_git('/home/vagrant/code/ReactReduxStarter').
           with(
             repository: 'git@github.com:SeanHolden/ReactReduxStarter.git',
+            checkout_branch: 'master',
+            enable_checkout: false,
             user: 'vagrant',
             group: 'vagrant',
             environment: { 'HOME' => '/home/vagrant', 'USER' => 'vagrant' },

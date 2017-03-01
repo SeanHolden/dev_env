@@ -5,10 +5,12 @@
 # Copyright:: 2017, Sean Holden, All Rights Reserved.
 #
 
+include_recipe 'ssh'
 include_recipe 'git'
 include_recipe 'ohmyzsh'
 
 user = node['dev_env']['user']
+repos = node['dev_env']['repos']
 
 directory "/home/#{user}/code" do
   owner user
@@ -16,9 +18,11 @@ directory "/home/#{user}/code" do
   mode '755'
 end
 
-node['dev_env']['repos'].each do |repo|
+repos.each do |repo|
   git "/home/#{user}/code/ReactReduxStarter" do
     repository repo
+    checkout_branch 'master'
+    enable_checkout false
     user user
     group user
     environment ({ 'HOME' => "/home/#{user}", 'USER' => user })
