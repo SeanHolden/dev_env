@@ -19,7 +19,9 @@ directory "/home/#{user}/code" do
 end
 
 repos.each do |repo|
-  git "/home/#{user}/code/ReactReduxStarter" do
+  dir_name = /\w*.git$/.match(repo).to_s.sub('.git','')
+
+  git "/home/#{user}/code/#{dir_name}" do
     repository repo
     checkout_branch 'master'
     enable_checkout false
