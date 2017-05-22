@@ -21,3 +21,8 @@ source $ZSH/oh-my-zsh.sh
 <% node['dev_env']['environment_variables'].each do |env_var| %>
 <%= "export #{env_var}" %>
 <% end %>
+
+# miscellaneous lines
+<% node['dev_env']['misc_lines'].each do |line| %>
+<%= line %>
+<% end %>

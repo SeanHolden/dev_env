@@ -9,3 +9,4 @@ default['dev_env']['environment_variables'] = %w(
 default['dev_env']['aliases'] = [
   'befs="bundle exec foreman start"'
 ]
+default['dev_env']['misc_lines'] = []
