@@ -7,6 +7,7 @@ default['dev_env']['environment_variables'] = %w(
   EDITOR="vim"
 )
 default['dev_env']['aliases'] = [
-  'befs="bundle exec foreman start"'
+  'befs="bundle exec foreman start"',
+  'be="bundle exec"',
 ]
 default['dev_env']['misc_lines'] = []
