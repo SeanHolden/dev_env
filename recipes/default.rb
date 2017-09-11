@@ -5,36 +5,36 @@
 # Copyright:: 2017, Sean Holden, All Rights Reserved.
 #
 
+include_recipe 'ohmyzsh'
 include_recipe 'ssh'
 include_recipe 'git'
-include_recipe 'ohmyzsh'
 
-user = node['dev_env']['user']
+_user = node['dev_env']['user']
 repos = node['dev_env']['repos']
 
-directory "/home/#{user}/code" do
-  owner user
-  group user
+directory "/home/#{_user}/code" do
+  owner _user
+  group _user
   mode '755'
 end
 
 repos.each do |repo|
   dir_name = /\w*.git$/.match(repo).to_s.sub('.git','')
 
-  git "/home/#{user}/code/#{dir_name}" do
+  git "/home/#{_user}/code/#{dir_name}" do
     repository repo
     checkout_branch 'master'
     enable_checkout false
-    user user
-    group user
-    environment ({ 'HOME' => "/home/#{user}", 'USER' => user })
+    user _user
+    group _user
+    environment ({ 'HOME' => "/home/#{_user}", 'USER' => _user })
     timeout 10
   end
 end
 
-template "/home/#{user}/.zshrc" do
+template "/home/#{_user}/.zshrc" do
   source 'zshrc.erb'
-  owner user
-  group user
+  owner _user
+  group _user
   mode '644'
 end

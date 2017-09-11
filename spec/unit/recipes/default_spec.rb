@@ -59,4 +59,57 @@ describe 'dev_env::default' do
       end
     end
   end
+
+  context 'When all attributes are default, on Ubuntu' do
+    let(:platform) { 'ubuntu' }
+    let(:version) { '16.04' }
+    let(:chef_run) {
+      ChefSpec::SoloRunner.new(platform: platform, version: version).
+        converge(described_recipe)
+    }
+
+    before do
+      stub_command("echo $SHELL | grep -c zsh").and_return(false)
+    end
+
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+
+    describe '#directories' do
+      it 'creates ~/code' do
+        expect(chef_run).to create_directory('/home/ubuntu/code').
+          with(
+            owner: 'ubuntu',
+            group: 'ubuntu',
+            mode: '755'
+          )
+      end
+    end
+
+    describe '#git' do
+      it 'checkout/sync repo' do
+        expect(chef_run).to sync_git('/home/ubuntu/code/ReactReduxStarter').
+          with(
+            repository: 'git@github.com:SeanHolden/ReactReduxStarter.git',
+            checkout_branch: 'master',
+            enable_checkout: false,
+            user: 'ubuntu',
+            group: 'ubuntu',
+            environment: { 'HOME' => '/home/ubuntu', 'USER' => 'ubuntu' },
+            timeout: 10
+          )
+      end
+    end
+
+    describe 'templates' do
+      it 'creates ~/.zshrc' do
+        expect(chef_run).to create_template('/home/ubuntu/.zshrc').with(
+          owner: 'ubuntu',
+          group: 'ubuntu',
+          mode: '644'
+        )
+      end
+    end
+  end
 end

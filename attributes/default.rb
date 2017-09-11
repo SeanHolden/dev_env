@@ -1,4 +1,8 @@
-default['dev_env']['user'] = 'vagrant'
+if platform?('centos')
+  default['dev_env']['user'] = 'vagrant'
+elsif platform?('ubuntu')
+  default['dev_env']['user'] = 'ubuntu'
+end
 
 default['dev_env']['ohmyzsh_plugins'] = %w(git)
 
