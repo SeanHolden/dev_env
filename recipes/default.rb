@@ -18,9 +18,7 @@ directory "/home/#{_user}/code" do
   mode '755'
 end
 
-repos.each do |repo|
-  dir_name = /\w*.git$/.match(repo).to_s.sub('.git','')
-
+repos.each do |dir_name, repo|
   git "/home/#{_user}/code/#{dir_name}" do
     repository repo
     checkout_branch 'master'

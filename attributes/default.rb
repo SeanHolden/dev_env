@@ -6,7 +6,7 @@ end
 
 default['dev_env']['ohmyzsh_plugins'] = %w(git)
 
-default['dev_env']['repos'] = %w()
+default['dev_env']['repos'] = {}
 
 default['dev_env']['environment_variables'] = %w(
   EDITOR="vim"
