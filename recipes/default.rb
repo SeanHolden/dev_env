@@ -40,6 +40,6 @@ template "/home/#{_user}/.zshrc" do
 end
 
 if platform?('ubuntu')
-  execute 'apt-get upgrade'
-  execute 'apt-get dist-upgrade'
+  execute 'apt-get -y upgrade'
+  execute 'apt-get -y dist-upgrade'
 end
