@@ -38,3 +38,8 @@ template "/home/#{_user}/.zshrc" do
   group _user
   mode '644'
 end
+
+if platform?('ubuntu')
+  execute 'apt-get upgrade'
+  execute 'apt-get dist-upgrade'
+end

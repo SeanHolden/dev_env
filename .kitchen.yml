@@ -14,12 +14,22 @@ verifier:
 
 platforms:
   - name: centos-7.2
+  - name: ubuntu-16.04
+    driver:
+      box: ubuntu/xenial64
 
 suites:
-  - name: default
+  - name: centos
     run_list:
       - recipe[dev_env::default]
     verifier:
       inspec_tests:
         - test/smoke/default
     attributes:
+  - name: ubuntu
+    run_list:
+      - recipe[dev_env::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+      attributes:

@@ -111,5 +111,15 @@ describe 'dev_env::default' do
         )
       end
     end
+
+    describe 'execute commands' do
+      it 'upgrades all packages' do
+        expect(chef_run).to run_execute('apt-get upgrade')
+      end
+
+      it 'upgrades all distro packages' do
+        expect(chef_run).to run_execute('apt-get dist-upgrade')
+      end
+    end
   end
 end
